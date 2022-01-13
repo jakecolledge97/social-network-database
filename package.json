@@ -1,0 +1,27 @@
+{
+  "name": "social-network-database",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index",
+    "dev": "nodemon index",
+    "seed": "node utils/seed",
+    "heroku-postbuild": "node utils/seed.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jakecolledge97/social-network-database.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jakecolledge97/social-network-database/issues"
+  },
+  "homepage": "https://github.com/jakecolledge97/social-network-database#readme",
+  "dependencies": {
+    "express": "^4.17.2",
+    "mongoose": "^6.1.6"
+  }
+}

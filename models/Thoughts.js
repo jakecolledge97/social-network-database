@@ -24,10 +24,10 @@ const thoughtsSchema = new Schema(
 );
 
 thoughtsSchema
-.virtual('getDate')
-//getter to format date
+.virtual('reactionCount')
+//Counts amount of reactions
 .get(function() {
-
+    return this.reactions.length
 });
 
 module.exports = Thoughts;

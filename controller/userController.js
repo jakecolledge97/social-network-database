@@ -1,4 +1,3 @@
-const res = require("express/lib/response");
 const { User } = require("../models");
 
 module.exports = {
@@ -46,7 +45,7 @@ module.exports = {
       });
   },
   //add Friend
-  async addFriend(req, res) {
+  addFriend(req, res) {
       //adds friend to userId
     User.findByIdAndUpdate(
       req.params.userId,

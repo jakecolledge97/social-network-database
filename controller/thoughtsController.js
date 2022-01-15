@@ -6,6 +6,11 @@ module.exports = {
     .then(async (thoughts) => res.json(thoughts))
     .catch((err) => res.status(500).json(err));
   },
+  getThoughtById(req, res) {
+      Thoughts.findById(req.params.thoughtsId)
+      .then((thought) => res.json(thought))
+      .catch((err) => res.status(500).json(err));
+  },
   addThought(req, res) {
     Thoughts.create(req.body)
       .then((thought) =>

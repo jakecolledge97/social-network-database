@@ -1,4 +1,4 @@
-const { Thoughts, User } = require("../models");
+const { Thoughts, User, Reaction } = require("../models");
 
 module.exports = {
   getAllThoughts(req, res) {
@@ -46,5 +46,21 @@ module.exports = {
         console.log(err);
         res.status(500).json(err);
       });
+  },
+  createReaction(req, res) {
+    Thoughts.findByIdAndUpdate(
+      req.params.thoughtsId,
+      { $push: { reactions: req.body } },
+      { runValidators: true, new: true }
+    )
+    .then((reaction) => 
+    !reaction
+    ? res.status(404).json({message: "No Thoughts exist"})
+    : res.json(reaction)
+    )
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    })
   },
 };

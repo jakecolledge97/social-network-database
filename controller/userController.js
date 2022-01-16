@@ -46,7 +46,7 @@ module.exports = {
   },
   //add Friend
   addFriend(req, res) {
-      //adds friend to userId
+    //adds friend to userId
     User.findByIdAndUpdate(
       req.params.userId,
       { $addToSet: { friends: req.params.friendId } },
@@ -55,8 +55,8 @@ module.exports = {
       .then((user) =>
         !user
           ? res.status(404).json({ message: "No user with this id!" })
-          //adds user to friendId
-          : User.findByIdAndUpdate(
+          : //adds user to friendId
+            User.findByIdAndUpdate(
               req.params.friendId,
               { $addToSet: { friends: req.params.userId } },
               { runValidators: true, new: true }
@@ -71,7 +71,7 @@ module.exports = {
         res.status(500).json(err);
       });
   },
-  deleteFriend(req,res){
+  deleteFriend(req, res) {
     User.findByIdAndUpdate(
       req.params.userId,
       { $pull: { friends: req.params.friendId } },
@@ -80,8 +80,8 @@ module.exports = {
       .then((user) =>
         !user
           ? res.status(404).json({ message: "No user with this id!" })
-          //adds user to friendId
-          : User.findByIdAndUpdate(
+          : //adds user to friendId
+            User.findByIdAndUpdate(
               req.params.friendId,
               { $pull: { friends: req.params.userId } },
               { runValidators: true, new: true }
@@ -95,5 +95,16 @@ module.exports = {
         console.log(err);
         res.status(500).json(err);
       });
+  },
+  deleteUser(req, res) {
+    User.findByIdAndRemove(req.params.userId).then((user) =>
+      !user
+        ? res.status(404).json({ message: "No User exists with this id" })
+        : res.json({message: "User has been deleted!"})
+    )
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err)
+    })
   },
 };

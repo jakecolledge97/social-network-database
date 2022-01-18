@@ -3,12 +3,18 @@ const { Thoughts, User, Reaction } = require("../models");
 module.exports = {
   getAllThoughts(req, res) {
     Thoughts.find()
-      .then(async (thoughts) => res.json(thoughts))
+      .then(async (thoughts) => 
+      !thoughts
+      ? res.status(404).json({message: "No thoughts!"})
+      :res.json(thoughts))
       .catch((err) => res.status(500).json(err));
   },
   getThoughtById(req, res) {
     Thoughts.findById(req.params.thoughtsId)
-      .then((thought) => res.json(thought))
+      .then((thought) => 
+      !thought
+      ? res.status(404).json({message: "No thoughts!"})
+      :res.json(thought))
       .catch((err) => res.status(500).json(err));
   },
   addThought(req, res) {
@@ -50,7 +56,7 @@ module.exports = {
   createReaction(req, res) {
     Thoughts.findByIdAndUpdate(
       req.params.thoughtsId,
-      { $push: { reactions: req.body } },
+      { $push: { $in: {reactions: req.body} } },
       { runValidators: true, new: true }
     )
     .then((reaction) => 
@@ -77,7 +83,7 @@ module.exports = {
   removeReaction(req, res) {
     Thoughts.findByIdAndUpdate(
       req.params.thoughtsId,
-      { $pull: {reactions: {$in: req.body.reactionId}}},
+      { $pull: {reactions: {_id: req.params.reactionId}}},
       { runValidators: true, new: true }
     )
     .then((reaction) => 

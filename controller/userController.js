@@ -24,7 +24,10 @@ module.exports = {
   //gets single user
   getUserById(req, res) {
     User.findById(req.params.userId)
-      .then((user) => res.json(user))
+      .then((user) => 
+      !user
+      ? res.status(404).json({message: "No user found with this id"})
+      : res.json(user))
       .catch((err) => res.status(500).json(err));
   },
   //updates user
